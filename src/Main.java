@@ -5,12 +5,69 @@ import com.Helpers.*;
 public class Main {
 
     public static void main(String[] args) {
-      String s = "abc de123";
-        String temp = reversewordsinplace(s);
-        System.out.println(temp);
+//        char [] str = {'h' , 'i', '_'};
+//        int result = numberwhitespace(str);
+        char [] str = {'h' , 'i', '_' , 't', 'h', 'e', 'r', 'e', ' ', ' ', ' ', ' '};
+        char[] result = URLify(str,8);                                      //\0
+        System.out.println(result);
+
 
     }
+    /* calculates the number of white space */
+    public static int numberwhitespace(char [] string){
 
+        int numws = 0;
+        for( int i = 0; i<string.length;i++){
+            if(string[i] == '_') {
+                numws++;
+            }
+        }
+        return numws;
+    }
+
+    static char[] URLify(char[] str, int truelength){
+        int white_space = numberwhitespace(str);
+        int newlength = truelength + white_space*2;
+        str[newlength] = '\0';
+        for(int i= truelength-1;i>=0; i--){
+            if(str[i] == '_'){
+                str[newlength-1] = '0';
+                str[newlength-2] = '2';
+                str[newlength-3] = '%';
+                newlength = newlength - 3;
+            }
+            else {
+                str[newlength-1] = str[i];
+                newlength--;
+            }
+        }
+        return str;
+    }
+    /* Given two strings, write a method to decide if one is a permutation of the other */
+    public static boolean isPermutation(String str1, String str2){
+        if(str1.length()!=str2.length()){
+            return false;
+        }
+        HashMap<Character,Integer> map = new HashMap<Character, Integer>();
+        for(int i=0;i<str1.length();i++){
+            if(!map.containsKey(str1.charAt(i))){
+                map.put(str1.charAt(i),1);
+            }
+            else {
+                map.put(str1.charAt(i), map.get(str1.charAt(i)) + 1);
+            }
+        }
+        for(int j=0; j<str2.length();j++){
+            if(!map.containsKey(str2.charAt(j)))
+                return false;
+            else if(map.get(str2.charAt(j))==0)
+                return false;
+            else {
+                map.put(str2.charAt(j), map.get(str2.charAt(j)) - 1);
+            }
+        }
+        return true;
+}
     /* Given an array of duplicates, find the value
      that is the only nonduplicate  */
     /* Reverse words in place */
@@ -51,9 +108,14 @@ public class Main {
     }
     /* Classic reverse the string problem */
 
-    public static String reverse(String str){
+    public static String reverseStringBuilder(String str){
         String temp = new StringBuilder(str).reverse().toString();
         return temp;
+    }
+    public static String reverseString(String str){
+        String result = "";
+        for(int i=str.length()-1;i>=0;i--) result += str.charAt(i);
+        return result;
     }
     public static boolean hasAllUniqueChars(String s){
         if(s== "")
@@ -71,6 +133,9 @@ public class Main {
         }
         return true;
     }
+
+    /* Uses HashSet to return the first integer that is a nonDuplicate */
+
     public static int returnNonDupe(int [] nums){
         HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
         for(int i=0;i<nums.length; i++){
@@ -86,34 +151,37 @@ public class Main {
             }
         return -1;
 }
+
     /* Given two sorted arrays A and B, A has a buffer at the end
-    large enough to hold B. How would you merge them into a sorted one
+    large enough to hold B. How would you merge them into a sorted one*/
 
     public static int [] mergeSortedArrays(int [] A, int [] B){
-        int x = 0;
-        int y = 0;
-        int i = 0;
-        int [] list = new int[A.length+B.length];
-        while(x < A.length && y <B.length){
-            if(A[x]<= B[y]){
-                list[i] = A[x];
-                i++;
-                x++;
+       return A;
+    }
+
+    /* Given an array of integers, count the number of pairs of integers that have the difference
+    k. For example, given the array A = [1,7,5,9,2,12,3] and k=2 Output = (1,3) , (3,5) , (5,7) , (7,9)
+     */
+    public static String findelementswithdiffk(int [] array, int k){
+        HashMap<Integer,Integer> map = new HashMap<Integer, Integer>();
+        String temp = "";
+        for (int i = 0; i < array.length; i++) {
+            if (!map.containsKey(array[i])) {
+                map.put(array[i], array[i]);
             }
-            else if(A[x]> B[y]){
-                list[i] = B[y];
-            }
-            else if(x == A.length-1)
-                for(int j = )
         }
-return new int [2];
+        for (int j = 0; j < array.length; j++) {
+            if(map.containsKey(array[j]+2)){
+                temp += " " + array[j] + "" + map.get(array[j]+2);
+            }
+        }
+        return temp;
     }
 
 
-*/
     /* Find # of 1's in the int */
 
-    public static int numberOfOnes(int num){
+    static int numberOfOnes(int num){
         int i=0;
         while(num>0){
             if(num%10 ==1)
