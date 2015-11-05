@@ -5,14 +5,12 @@ import com.Helpers.*;
 public class Main {
 
     public static void main(String[] args) {
-//        char [] str = {'h' , 'i', '_'};
-//        int result = numberwhitespace(str);
-        char [] str = {'h' , 'i', '_' , 't', 'h', 'e', 'r', 'e', ' ', ' ', ' ', ' '};
-        char[] result = URLify(str,8);                                      //\0
-        System.out.println(result);
-
+        String str = "aabccccccaaa";
+        String compressed = compress(str);
+        System.out.println(compressed);
 
     }
+
     /* calculates the number of white space */
     public static int numberwhitespace(char [] string){
 
@@ -24,7 +22,51 @@ public class Main {
         }
         return numws;
     }
+    public static boolean isPalindromePermutation(String str){
+        HashMap<Character,Integer> map = new HashMap<Character, Integer>();
+        int numOdds = 0;
+        for(int i=0; i<str.length();i++){
+            if(!map.containsKey(str.charAt(i))){
+                map.put(str.charAt(i), 1);
+                numOdds++;
+            }
 
+            else if( map.get(str.charAt(i))%2 == 1){
+                numOdds--;
+                map.put(str.charAt(i), map.get(str.charAt(i))+1);
+            }
+            else {
+                map.put(str.charAt(i), map.get(str.charAt(i))+1);
+                numOdds++;
+            }
+        }// end for loop
+        if(numOdds>1){
+            return false;
+        }
+
+        return true;
+    }
+    /* Compress the string Input : "aabccccccaaa"
+                           Output: a2b1c5a2
+     */
+    public static String compress(String str){
+        String result = "";
+        int count = 1;
+        for(int i=0; i<=str.length()-2;i++){
+            if(count == 1) {
+                result += str.charAt(i);
+            }
+            if(str.charAt(i) == str.charAt(i+1)){
+                count++;
+            }
+            else {
+                result +=  count;
+                count = 1;
+            }
+        }
+        result+= count;
+        return result;
+    }
     static char[] URLify(char[] str, int truelength){
         int white_space = numberwhitespace(str);
         int newlength = truelength + white_space*2;
