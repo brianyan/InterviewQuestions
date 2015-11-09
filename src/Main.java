@@ -5,10 +5,9 @@ import com.Helpers.*;
 public class Main {
 
     public static void main(String[] args) {
-        String str = "aabccccccaaa";
-        String compressed = compress(str);
-        System.out.println(compressed);
-
+       String test = "abbacdef";
+    char [] c = repeatedletters(test);
+        System.out.println(c);
     }
 
     /* calculates the number of white space */
@@ -21,6 +20,52 @@ public class Main {
             }
         }
         return numws;
+    }
+    public static boolean StringRotation(String str1, String str2){
+        StringBuilder temp = new StringBuilder();
+        return true;
+    }
+    public static String test(String str){
+
+        return(str.substring(1));
+    }
+    public static char[] repeatedletters(String str){
+        char [] test = new char[256];
+        char [] result = new char[str.length()];
+        int count = 0;
+        for(int i=0; i<str.length();i++){
+            char c = str.charAt(i);
+            if(test[c] == 1){
+                result[count] = c;
+                count++;
+            }
+            test[c]++;
+        }
+        return result;
+    }
+    public static int[] testarray(int[] nums){
+        nums[1]= 5;
+        nums[4] = 2;
+        System.out.println(nums[4]);
+        return nums;
+    }
+
+    public static void permutation(String prefix, String str){
+        int n = str.length();
+        if(n == 0) { // here the length of string has been reached
+            System.out.println(prefix);
+        }
+        else {
+            // do recursive statement
+            for(int i =0; i<n; i++){
+                permutation(prefix + str.charAt(i),
+                        str.substring(0,i) + str.substring(i+1));
+            }
+        }
+    }
+    /* compute the different ways someone can step up stairs size n given that there is 1
+    public static int numberofsteps(int n, int[] memo){
+
     }
     public static boolean isPalindromePermutation(String str){
         HashMap<Character,Integer> map = new HashMap<Character, Integer>();
