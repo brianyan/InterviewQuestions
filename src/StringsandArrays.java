@@ -7,6 +7,10 @@ import java.util.List;
  * Created by brianyan on 10/23/15.
  */
 public class StringsandArrays {
+
+    public static void main(){
+
+    }
     // Remove duplicates from a list
     public int [] removeDuplicates(int [] nums){
 

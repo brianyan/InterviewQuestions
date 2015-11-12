@@ -1,13 +1,28 @@
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Arrays;
+
+import apple.laf.JRSUIUtils;
 import com.Helpers.*;
+import com.Helpers.TreeNode;
+
+import javax.swing.tree.*;
 
 public class Main {
 
     public static void main(String[] args) {
-       String test = "abbacdef";
-    char [] c = repeatedletters(test);
-        System.out.println(c);
+//       TreeNode node = new TreeNode(10);
+//        node.setRightChild(new TreeNode(15));
+//        node.setLeftChild(new TreeNode(5));
+//        node.left.setRightChild(new TreeNode(8));
+//        node.left.setLeftChild(new TreeNode(3));
+//
+//        System.out.println(inorderTraversalwithoutRecursion(node));
+
+        String str = "There is a blackout";
+        System.out.println(reversewords(str).toString());
     }
 
     /* calculates the number of white space */
@@ -29,6 +44,40 @@ public class Main {
 
         return(str.substring(1));
     }
+    public static String inorderTraversalwithoutRecursion(TreeNode root){
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        String result = "";
+        boolean [] array = new boolean[16];
+        Arrays.fill(array, false);
+        array[root.data] = true;
+        while(!queue.isEmpty()){
+            if(queue.peek().left!=null){
+                if(array[queue.peek().left.data] == false) {
+                    queue.add(queue.peek().left);
+                    array[queue.peek().left.data] = true;
+                }
+                else break;
+            }
+            else if (queue.peek().right != null) {
+                if(array[queue.peek().right.data] ==false){
+                    TreeNode right = new TreeNode(queue.peek().right.data);
+                    array[queue.peek().right.data] = true;
+                    result += queue.peek() + " ->";
+                    queue.remove(queue.peek());
+                    queue.add(right);
+                }
+            }
+
+            else {
+                    result += queue.peek() + " ->";
+                    queue.remove(queue.peek());
+
+                }
+        }
+        return result;
+
+    }
     public static char[] repeatedletters(String str){
         char [] test = new char[256];
         char [] result = new char[str.length()];
@@ -42,6 +91,28 @@ public class Main {
             test[c]++;
         }
         return result;
+    }
+    public void firstNonRepeatingChar(String st1 ){
+
+        int[] freq = new int[26];
+
+        for(int i=0; i<st1.length() ;i++){
+            //first time char occurs, store the index of that char
+            if(freq[st1.charAt(i)-'a']==0){
+                freq[st1.charAt(i)-'a'] = 1;
+            }else{//occurs for more than one time
+                freq[st1.charAt(i)-'a']++ ;
+            }
+        }
+
+        for(int i=0; i<st1.length();i++)
+        {
+            if(freq[st1.charAt(i)-'a']==1){
+                System.out.println(st1.charAt(i));
+                break;
+            }
+        }
+
     }
     public static int[] testarray(int[] nums){
         nums[1]= 5;
@@ -67,6 +138,7 @@ public class Main {
     public static int numberofsteps(int n, int[] memo){
 
     }
+    */
     public static boolean isPalindromePermutation(String str){
         HashMap<Character,Integer> map = new HashMap<Character, Integer>();
         int numOdds = 0;
@@ -158,7 +230,16 @@ public class Main {
     /* Given an array of duplicates, find the value
      that is the only nonduplicate  */
     /* Reverse words in place */
+    public static String reversewords(String str){
+        String[] words =  str.split(" ");
+        StringBuilder build = new StringBuilder();
+        for(int i=words.length-1; i>=0;i--){
+            build.append(words[i]);
+            build.append(" ");
+        }
+        return build.toString();
 
+    }
     public static String reversewordsinplace(String str) {
         String temp = "";
         String result = "";
