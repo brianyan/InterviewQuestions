@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Arrays;
 
+
 import apple.laf.JRSUIUtils;
 import com.Helpers.*;
 import com.Helpers.TreeNode;
@@ -20,12 +21,25 @@ public class Main {
 //        node.left.setLeftChild(new TreeNode(3));
 //
 //        System.out.println(inorderTraversalwithoutRecursion(node));
-
-        String str = "There is a blackout";
-        System.out.println(reversewords(str).toString());
+        int [] p = {1,2,2,2,3,3,4};
+        removeDuplicates(p);
+        System.out.println(Arrays.toString(p));
+        //System.out.println(removeDuplicates(p));
     }
 
     /* calculates the number of white space */
+    public static int [] removeDuplicates(int [] nums){
+        int dupes = 0;
+        int i=1;
+        while(i< nums.length){
+            if(nums[i] == nums[i-1])
+                dupes++;
+            else
+                nums[i-dupes] = nums[i];
+            i++;
+        }
+        return nums;
+    }
     public static int numberwhitespace(char [] string){
 
         int numws = 0;
