@@ -1,8 +1,4 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Arrays;
+import java.util.*;
 
 
 import apple.laf.JRSUIUtils;
@@ -21,9 +17,10 @@ public class Main {
 //        node.left.setLeftChild(new TreeNode(3));
 //
 //        System.out.println(inorderTraversalwithoutRecursion(node));
-        int [] p = {1,2,2,2,3,3,4};
-        removeDuplicates(p);
-        System.out.println(Arrays.toString(p));
+        int [] p = {1,3,5,7,9};
+
+        ArrayList<Integer> list = findsubsequence(p, 15);
+        System.out.println(list);
         //System.out.println(removeDuplicates(p));
     }
 
@@ -372,9 +369,34 @@ public class Main {
         }
         return i;
     }
+//    public static List<LinkedListNode> createLinkedListDepth(TreeNode root){
+//       Queue<TreeNode> q = new LinkedList<TreeNode>();
+//            q.add(root);
+//            while(!q.isEmpty()){
+//
+//            }
+//        return List<LinkedListNode>();
+//    }
 
-
-
+    public static ArrayList<Integer> findsubsequence( int [] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        int i = 0;
+        int runningsum = 0;
+        while(i< nums.length){
+            runningsum += nums[i];
+            if(!map.containsKey(runningsum)){
+                map.put(runningsum , i);
+                i++;
+            }
+            if(map.containsKey(runningsum - target)) {
+                result.add(map.get(runningsum -target));
+                result.add(map.get(runningsum));
+                return result;
+            }
+        }// end while
+        return result;
+    }// end method
 
 
 
