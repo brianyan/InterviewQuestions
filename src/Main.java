@@ -4,26 +4,42 @@ import java.util.*;
 import apple.laf.JRSUIUtils;
 import com.Helpers.*;
 import com.Helpers.TreeNode;
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import javax.swing.tree.*;
 
 public class Main {
 
     public static void main(String[] args) {
-//       TreeNode node = new TreeNode(10);
-//        node.setRightChild(new TreeNode(15));
-//        node.setLeftChild(new TreeNode(5));
-//        node.left.setRightChild(new TreeNode(8));
-//        node.left.setLeftChild(new TreeNode(3));
-//
-//        System.out.println(inorderTraversalwithoutRecursion(node));
-        int [] p = {1,3,5,7,9};
 
-        ArrayList<Integer> list = findsubsequence(p, 15);
-        System.out.println(list);
-        //System.out.println(removeDuplicates(p));
     }
+    public static void printhash(){
+        Scanner sc = new Scanner(System.in);
+        int stairs = sc.nextInt();
+        if(stairs < 1){
+            System.out.println("Please enter another number");
+            return;
+        }
+        else {
+            int start = 1;
+            String str = "#";
 
+
+            while (start <= stairs) {
+                System.out.print(String.format("%1$" + stairs + "s", printhash(start)));
+                System.out.println();
+                start++;
+            }
+        }
+    }
+    public static String printhash(int n){
+        String s = "";
+        while(n>0){
+            s+="#";
+            n--;
+        }
+        return s;
+    }
     /* calculates the number of white space */
     public static int [] removeDuplicates(int [] nums){
         int dupes = 0;
@@ -125,13 +141,6 @@ public class Main {
         }
 
     }
-    public static int[] testarray(int[] nums){
-        nums[1]= 5;
-        nums[4] = 2;
-        System.out.println(nums[4]);
-        return nums;
-    }
-
     public static void permutation(String prefix, String str){
         int n = str.length();
         if(n == 0) { // here the length of string has been reached
@@ -251,40 +260,6 @@ public class Main {
         return build.toString();
 
     }
-    public static String reversewordsinplace(String str) {
-        String temp = "";
-        String result = "";
-        // reverse string in place
-        for (int i = str.length() - 1; i >= 0; i--) {
-            temp += str.charAt(i);
-        }
-
-        // here we have a reversed string,
-        // now we want to keep track of length of the word until whitespace
-        // and once it reaches whitespace, reverse that word
-        int k = 0;
-        while (k < temp.length()) {
-            int start = 0;
-            int end = 0;
-            if(!Character.isWhitespace(temp.charAt(k))) {
-                end ++;
-            }
-            else{
-                int temp1 = end;
-                while(start<temp1){
-                    result +=temp.charAt(temp1-1);
-                    temp1--;
-                }
-                result += " ";
-            }
-            end++;
-            start = end;
-
-            k = end;
-
-        }
-        return result;
-    }
     /* Classic reverse the string problem */
 
     public static String reverseStringBuilder(String str){
@@ -398,7 +373,27 @@ public class Main {
         return result;
     }// end method
 
+    public static int magicIndex(int[] nums){
+        int start = 0;
 
+        int found = magicIndexhelper(nums, 0, nums.length);
+        return found;
+    }// end method
+
+    public static int magicIndexhelper(int [] nums, int start, int end){
+        int mid = (start + end)/2;
+        if(start > end)
+            return Integer.MIN_VALUE;
+        if(nums[mid] == mid)
+            return mid;
+        else if(nums[mid] > mid) {
+            return magicIndexhelper(nums, start, mid - 1);
+        }
+        else
+            return magicIndexhelper(nums, mid+1, end);
+        }
+
+    // end method
 
 
 
