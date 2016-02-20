@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import com.Helpers.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -15,31 +16,53 @@ import javax.swing.tree.*;
 public class Main {
 
     public static void main(String[] args) {
-        String str = "fucking";
-        String s = "1232s";
-        if(s.matches("[0-9]+"))
-            System.out.println("fs");
 
-
-        System.out.println(str.substring(str.length()-2,str.length()));
-        System.out.println(str.substring(str.length()-3,str.length()));
-        if(str.substring(str.length()-3,str.length()).equals("ing")){
-            System.out.println("fuck");
-            str = str.substring(0,str.length()-3);
-            System.out.println(str);
-        }
-//        int [] lengths = {1,2,5,3};
-//        Arrays.sort(lengths);
-//        ArrayList<Integer> list = new ArrayList<Integer>();
-//        for(int n:lengths)
-//            list.add(n);
-//        Set<Character> set = new HashSet<Character>();
-//        Stack<Character> stack = new Stack<Character>();
-//        set.add('c');
+        int num = 934;
+        System.out.println(lessthanThousand(934));
     }
-    public static boolean isbetween0and255(int num){
-        return (num >= 0 && num <=255);
+    public static boolean isbetween0and255(int num) {
+        return (num >= 0 && num <= 255);
+    }
+    /* String Questions */
 
+    // Return the last word in a String
+        public int lengthOfLastWord(String s) {
+            if(s.length() == 0 || s == null)
+                return 0;
+            String [] words = s.trim().split(" ");
+            return words[words.length-1].length();
+        }
+    // Return the Longest Common Prefix among all Strings in a String Array
+    public String longestCommonPrefix(String[] strs) {
+        if(strs == null || strs.length == 0){
+            return "";
+        }
+        String result = "";
+        /*
+        string
+        str
+        s
+        strs
+        ss
+        sss
+        -> return s
+        */
+
+        String s = strs[0]; // s = string
+        int MinLengthPrefix = s.length();
+        for(int i=1; i<strs.length; i++){
+            int length = 0;
+            for(int j = 0; j<strs[i].length() && j<s.length();j++){
+
+                if(strs[i].charAt(j) == s.charAt(j))
+                    length++;
+                else
+                    break;
+            }
+            if(length < MinLengthPrefix )
+                MinLengthPrefix = length;
+        }
+        return s.substring(0,MinLengthPrefix);
     }
     public int removeDuplicatesinplace(int[] nums) {
         // [ 1,1,2,5,5,5,6,7,9,9] -> [1,2,5,6,7,9], 6
@@ -66,6 +89,72 @@ public class Main {
         nums[j] = temp;
         return;
     }
+    /* function to parse Int as String */
+    public static String lessthanThousand(int num){
+        HashMap<Integer, String> map = new HashMap <Integer,String>();
+        map.put(1, "One");
+        map.put(2, "Two");
+        map.put(3, "Three");
+        map.put(4, "Four");
+        map.put(5, "Five");
+        map.put(6, "Six");
+        map.put(7, "Seven");
+        map.put(8, "Eight");
+        map.put(9, "Nine");
+        map.put(10, "Ten");
+        map.put(11, "Eleven");
+        map.put(12, "Twelve");
+        map.put(13, "Thirteen");
+        map.put(14, "Fourteen");
+        map.put(15, "Fifteen");
+        map.put(16, "Sixteen");
+        map.put(17, "Seventeen");
+        map.put(18, "Eighteen");
+        map.put(19, "Ninteen");
+        map.put(20, "Twenty");
+        map.put(30, "Thirty");
+        map.put(40, "Forty");
+        map.put(50, "Fifty");
+        map.put(60, "Sixty");
+        map.put(70, "Seventy");
+        map.put(80, "Eighty");
+        map.put(90, "Ninety");
+        String result = "";
+        //801
+        if(num > 100){
+            int hundreds = num /100;
+            num = num - hundreds * 100;
+            result += map.get(hundreds) + " Hundred ";
+        }
+        if(num > 9){
+            int digit = num % 10;
+            result += map.get(num - digit) + map.get(digit);
+        }
+        return result;
+    }
+    /* Pascal's Triangle problem*/
+    public List<List<Integer>> generate(int numRows) {
+        List< List<Integer> > result = new ArrayList< List<Integer> >();
+        if(numRows == 0)
+            return result;
+        ArrayList<Integer> firstRow = new ArrayList<Integer>();
+        firstRow.add(1);
+        result.add(firstRow);
+        for(int i=1;i<numRows; i++) {
+            List<Integer> temp = result.get(i-1);
+            ArrayList<Integer> xRow = new ArrayList<Integer>();
+            for(int j=0;j<=temp.size();j++){
+                if(j == 0 || j == temp.size()){
+                    xRow.add(0);
+                }
+                else{
+                    xRow.add(temp.get(j-1) + temp.get(j));
+                }
+            } // end inner for loop
+            result.add(xRow);
+        } // end outer for loop
+        return result;
+    } // end generate function
     public static boolean isPalindrome(String str){
         StringBuilder sb = new StringBuilder(str);
         sb.reverse();
@@ -496,13 +585,13 @@ public class Main {
         }
         return i;
     }
-//    public static List<LinkedListNode> createLinkedListDepth(TreeNode root){
+//    public static List<LinkedLinkedListNode> createLinkedListDepth(TreeNode root){
 //       Queue<TreeNode> q = new LinkedList<TreeNode>();
 //            q.add(root);
 //            while(!q.isEmpty()){
 //
 //            }
-//        return List<LinkedListNode>();
+//        return List<LinkedLinkedListNode>();
 //    }
 
     public static ArrayList<Integer> findsubsequence( int [] nums, int target) {
@@ -552,6 +641,50 @@ public static int helper(){
     s.add(5);
     return 5;
 }
+    /* Linked List practice problems */
+    public LinkedListNode swapPairs(LinkedListNode head) {
+        if(head == null)
+            return null;
+        if(head.next == null)
+            return head;
+        LinkedListNode FirstSwap = head;
+        while(FirstSwap.next != null){
+            int temp = FirstSwap.data;
+            FirstSwap.data = FirstSwap.next.data;
+            FirstSwap.next.data = temp;
+            if(FirstSwap.next.next == null){
+                return head;
+            }
+            FirstSwap = FirstSwap.next.next;
+        }
+        return head;
+    }
+    /*
+    OddEvenList returns a LinkedListNode where the odd indexes
+    are the first half of the list and the second half of the list
+    is all even index nodes
+     */
+    public LinkedListNode oddEvenList(LinkedListNode head) {
+        /*
+     Input:1->2->3->4->NULL,
+    Output:1->3->2->NULL.
+        */
+        if(head == null || head.next == null || head.next.next == null){
+            return head;
+        }
+        LinkedListNode startOfEvens = head.next;
+        LinkedListNode even = head.next;
+        LinkedListNode odd = head;
+        while(even!= null && even.next!=null){
+            odd.next = odd.next.next;
+            even.next = even.next.next;
+            odd = odd.next;
+            even = even.next;
+        }
+        odd.next = startOfEvens;
+        return head;
+    }
+     
 
 
 }
