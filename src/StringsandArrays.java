@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,9 +10,16 @@ import java.util.List;
 public class StringsandArrays {
 
     public static void main(){
-        int [] p = {1,2,2,2,3,3,4};
-        System.out.println(removeDuplicates(p));
-
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        list.add(5);
+        list.add(6);
+        list.add(7);
+        list.add(8);
+        list.add(9);
+        int mid = list.size()/2;
+        System.out.println(list);
+        List<Integer> LeftCenter = list.subList(0,mid);
+        System.out.println(LeftCenter);
     }
     // Remove duplicates from a list
     public static int [] removeDuplicates(int [] nums){
@@ -57,5 +65,25 @@ public class StringsandArrays {
 
         }
         return 0;
+
     }
+    //CTCI 1.2
+    public static boolean isPermutation(String str1, String str2){
+        if(str1.length()!=str2.length()){
+            return false;
+        }
+        char [] string1 = str1.toCharArray();
+        int [] letters = new int[128];
+        for(char c: string1){
+            letters[c]++;
+        }
+        char [] string2 = str2.toCharArray();
+        for(char c: string2){
+            letters[c]--;
+            if(letters[c]<0)
+                return false;
+        }
+        return true;
+    }
+
 }

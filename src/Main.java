@@ -1,4 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 import apple.laf.JRSUIUtils;
@@ -11,7 +15,153 @@ import javax.swing.tree.*;
 public class Main {
 
     public static void main(String[] args) {
+        String str = "fucking";
+        String s = "1232s";
+        if(s.matches("[0-9]+"))
+            System.out.println("fs");
 
+
+        System.out.println(str.substring(str.length()-2,str.length()));
+        System.out.println(str.substring(str.length()-3,str.length()));
+        if(str.substring(str.length()-3,str.length()).equals("ing")){
+            System.out.println("fuck");
+            str = str.substring(0,str.length()-3);
+            System.out.println(str);
+        }
+//        int [] lengths = {1,2,5,3};
+//        Arrays.sort(lengths);
+//        ArrayList<Integer> list = new ArrayList<Integer>();
+//        for(int n:lengths)
+//            list.add(n);
+//        Set<Character> set = new HashSet<Character>();
+//        Stack<Character> stack = new Stack<Character>();
+//        set.add('c');
+    }
+    public static boolean isbetween0and255(int num){
+        return (num >= 0 && num <=255);
+
+    }
+    public int removeDuplicatesinplace(int[] nums) {
+        // [ 1,1,2,5,5,5,6,7,9,9] -> [1,2,5,6,7,9], 6
+        // return int of new length array
+        if(nums == null || nums.length ==0)
+            return 0;
+        int currentNum = nums[0];
+        int lastindex = 1;
+        for(int i=1; i<nums.length; i++){
+            if(currentNum == nums[i]){
+                continue;
+            }
+            else {
+                currentNum = nums[i];
+                PerformSwap(lastindex,i,nums);
+                lastindex+=1;
+            }
+        }
+        return lastindex;
+    }
+    public void PerformSwap(int i, int j, int[] nums){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+        return;
+    }
+    public static boolean isPalindrome(String str){
+        StringBuilder sb = new StringBuilder(str);
+        sb.reverse();
+        if(str.equals(sb))
+            return true;
+        return false;
+    }
+    public static boolean wordPattern(String pattern, String str) {
+        String [] words = str.split(" ");
+        HashMap<Character, String> map = new HashMap<Character,String>();
+        if(words.length != pattern.length())
+            return false;
+        for(int i = 0; i<pattern.length();i++){
+            if(!map.containsKey(pattern.charAt(i))){
+                map.put(pattern.charAt(i),words[i]);
+            }
+            else {
+                if(!map.get(pattern.charAt(i)).equals(words[i])){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+//    public static boolean isValidSocket(String address)
+//    {
+//        String [] socket = address.split("(\\.:)");
+//        // Write your implementation here
+//    }
+    public static long sumOfIntegers(int[] arr){
+        long sum = 0;
+        for(int i: arr){
+            sum += arr[i];
+        }
+        return sum;
+    }
+    /* Bob is in a candy shop and wants to purchase his favorite
+     candy, which he knows costs N dollars. He has an infinite
+     number of 1,2,5,10,20,50, and 100 dollar bills in his pocket.
+      Bob wants to know the number of different ways he can pay
+      the N dollars for his candy.
+    */
+
+    public static void PaidCandyShop(int n){
+        HashMap<Integer,Integer> map = new HashMap<Integer, Integer>();
+        // 1 = 1
+        // 2 = (2) (1,1,)
+        // 3 = (2,1) (1,1,1)
+        // 4 = (2,2) , (1,1,1,1) , (1,1,2)
+        // 5 = (1,1,1,1,1) , (2,1,1,1) (2,2,1) (5)
+
+        while(n>0){
+
+        }
+    }
+    public static void HackerRankpractice(String [] args) throws IOException{
+    Scanner in = new Scanner(System.in);
+    final String fileName = System.getenv("OUTPUT_PATH");
+    BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+    long res;
+
+    int _arr_size = Integer.parseInt(in.nextLine());
+    int[] _arr = new int[_arr_size];
+    int _arr_item;
+    for(int _arr_i = 0; _arr_i < _arr_size; _arr_i++) {
+        _arr_item = Integer.parseInt(in.nextLine());
+        _arr[_arr_i] = _arr_item;
+    }
+
+    res = sumOfIntegers(_arr);
+    bw.write(String.valueOf(res));
+    bw.newLine();
+
+    bw.close();
+}
+    public static void printscannedIntegers(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int a=sc.nextInt();
+        int b = sc.nextInt();
+        int c = sc.nextInt();
+
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+    }
+    public static void ScanAndPrintStringDoubleInteger (String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int x=sc.nextInt();
+        String s = sc.nextLine();
+        Double y = sc.nextDouble();
+        //Complete this code
+
+        System.out.println("String: "+s);
+        System.out.println("Double: "+y);
+        System.out.println("Int: "+x);
     }
     public static void printhash(){
         Scanner sc = new Scanner(System.in);
@@ -120,7 +270,9 @@ public class Main {
         return result;
     }
     public void firstNonRepeatingChar(String st1 ){
-
+    Stack<Integer> stack = new Stack<Integer>();
+        stack.push(5);
+        Queue<Integer> q = new LinkedList<Integer>();
         int[] freq = new int[26];
 
         for(int i=0; i<st1.length() ;i++){
@@ -356,6 +508,7 @@ public class Main {
     public static ArrayList<Integer> findsubsequence( int [] nums, int target) {
         HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
         ArrayList<Integer> result = new ArrayList<Integer>();
+        result.size();
         int i = 0;
         int runningsum = 0;
         while(i< nums.length){
@@ -394,7 +547,11 @@ public class Main {
         }
 
     // end method
-
+public static int helper(){
+    Stack<Integer> s = new Stack<Integer>();
+    s.add(5);
+    return 5;
+}
 
 
 }
