@@ -3,27 +3,56 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import com.Helpers.*;
-import java.util.concurrent.ConcurrentHashMap;
-
-
-import apple.laf.JRSUIUtils;
-import com.Helpers.*;
 import com.Helpers.TreeNode;
-import com.sun.xml.internal.ws.util.StringUtils;
 
-import javax.swing.tree.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        int num = 934;
-        System.out.println(lessthanThousand(934));
+        int num = 8;
+        System.out.println(nthfibbonaciIterative(num));
     }
     public static boolean isbetween0and255(int num) {
         return (num >= 0 && num <= 255);
     }
+
+    public static int nthfibbonaciRecursive(int num){
+        if(num == 0){
+            return 0;
+        }
+        if(num == 1){
+            return 1;
+        }
+        return nthfibbonaciRecursive(num-1) + nthfibbonaciRecursive(num-2);
+    }
+    public static int nthfibbonaciIterative(int num){
+        if(num == 0){
+            return 0;
+        }
+        if(num == 1){
+            return 1;
+        }
+        int curr = 1;
+        int prev = 0;
+        int result = curr + prev;
+        for(int i=2; i<=num; i++){
+            int temp = curr;
+            result = curr + prev;
+            curr = result;
+            prev = temp;
+        }
+        return result;
+    }
     /* String Questions */
+
+    public static boolean isPalindrome(String str){
+        StringBuilder sb = new StringBuilder(str);
+        sb.reverse();
+        if(str.equals(sb))
+            return true;
+        return false;
+    }
 
     // Return the last word in a String
         public int lengthOfLastWord(String s) {
@@ -32,6 +61,8 @@ public class Main {
             String [] words = s.trim().split(" ");
             return words[words.length-1].length();
         }
+    /* Array Questions */
+
     // Return the Longest Common Prefix among all Strings in a String Array
     public String longestCommonPrefix(String[] strs) {
         if(strs == null || strs.length == 0){
@@ -63,6 +94,26 @@ public class Main {
                 MinLengthPrefix = length;
         }
         return s.substring(0,MinLengthPrefix);
+    }
+    /* Find maximum profit given a list of prices for stocks where ith
+    * index represents the ith day */
+    public int maxProfit(int[] prices) {
+        if(prices == null || prices.length < 2)
+            return 0;
+        int lowestminIndex = 0;
+        int maxprofit = 0;
+        int diff = 0;
+        // [ 2, 5, 10, 9, 15,3, 17,1,18]
+        for(int i=0; i<prices.length;i++){
+            if(prices[i] < prices[lowestminIndex]){
+                lowestminIndex = i;
+            }
+            diff = prices[i] - prices[lowestminIndex];
+            if(diff > maxprofit){
+                maxprofit = diff;
+            }
+        }
+        return maxprofit;
     }
     public int removeDuplicatesinplace(int[] nums) {
         // [ 1,1,2,5,5,5,6,7,9,9] -> [1,2,5,6,7,9], 6
@@ -155,13 +206,6 @@ public class Main {
         } // end outer for loop
         return result;
     } // end generate function
-    public static boolean isPalindrome(String str){
-        StringBuilder sb = new StringBuilder(str);
-        sb.reverse();
-        if(str.equals(sb))
-            return true;
-        return false;
-    }
     public static boolean wordPattern(String pattern, String str) {
         String [] words = str.split(" ");
         HashMap<Character, String> map = new HashMap<Character,String>();
@@ -684,7 +728,61 @@ public static int helper(){
         odd.next = startOfEvens;
         return head;
     }
-     
+    /* Reverse a Linked List*/
+    public LinkedListNode reverseList(LinkedListNode head) {
+        //iterative version
+        if(head == null || head.next == null){
+            return head;
+        }
+        LinkedListNode prev = null;
+        LinkedListNode curr = head;
+        LinkedListNode next = curr.next;
+        while(curr!=null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+
+    /* TreeNode questions*/
 
 
+    /* Find Lowest Common Ancestor of a BST */
+    public TreeNode lowestCommonAncestorBST(TreeNode root, TreeNode p, TreeNode q) {
+        if(p == root || q == root){
+            return root;
+        }
+        // check to see if it is on left subtree
+        if(root.data < p.data && root.data< q.data){
+            return lowestCommonAncestorBST(root.right, p ,q);
+        }
+        if(root.data > p.data && root.data > q.data)
+            return lowestCommonAncestorBST(root.left, p ,q);
+        // check to see if it is on right subtree
+        if(p.data > q.data){
+            if(root.data > q.data && root.data < p.data){
+                return root;
+            }
+        }
+        else { // q<p
+            if(root.data < q.data && root.data > p.data){
+                return root;
+            }
+        }
+        return null;
+    }
+    /* Find Lowest Common Ancestor of a Binary Tree */
+    public TreeNode lowestCommonAncestorBT(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null || root == p || root == q){
+            return root;
+        }
+        TreeNode left = lowestCommonAncestorBT(root.left,p,q);
+        TreeNode right = lowestCommonAncestorBT(root.right,p,q);
+        if(left!=null && right!=null){
+            return root;
+        }
+        return left!=null ? left : right;
+    }
 }
