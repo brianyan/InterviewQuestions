@@ -12,7 +12,9 @@ public class LinkedListNode {
     }
 
     public LinkedListNode() { }
-
+    public LinkedListNode(int n) {
+        data = n;
+    }
     public void setNext(LinkedListNode n) {
         next = n;
         if (this == last) {

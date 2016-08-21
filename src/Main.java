@@ -1,20 +1,36 @@
 import java.io.BufferedWriter;
+import java.io.CharArrayReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import com.Helpers.*;
 import com.Helpers.TreeNode;
+import com.sun.source.tree.Tree;
 
 
 public class Main {
 
+    public static boolean DetectCycle(LinkedListNode node){
+        LinkedListNode slow = node;
+        LinkedListNode fast = node;
+        while(fast !=null && fast.next !=null){
+            if(slow == fast || slow.next == fast){
+                return true;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return false;
+    }
     public static void main(String[] args) {
 
         int num = 8;
-        System.out.println(nthfibbonaciIterative(num));
+        String s = "";
+        System.out.println(s.substring(0,0));
     }
     public static boolean isbetween0and255(int num) {
         return (num >= 0 && num <= 255);
+
     }
 
     public static int nthfibbonaciRecursive(int num){
@@ -529,6 +545,7 @@ public class Main {
             else {
                 map.put(str2.charAt(j), map.get(str2.charAt(j)) - 1);
             }
+
         }
         return true;
 }
@@ -572,6 +589,7 @@ public class Main {
         }
         return true;
     }
+
 
     /* Uses HashSet to return the first integer that is a nonDuplicate */
 
@@ -746,7 +764,110 @@ public static int helper(){
         return prev;
     }
 
+    public LinkedListNode mergeTwoLists(LinkedListNode l1, LinkedListNode l2) {
+        //  1 -> 2 -> 3 - > 4
+        // 2 -> 4 - > 5 -> 6
+        LinkedListNode bull = new LinkedListNode(-1);
+        LinkedListNode mergedList = bull;
+        while(l1!=null && l2!=null){
+            if(l1.data <= l2.data){
+                mergedList.next = new LinkedListNode(l1.data);
+                l1 = l1.next;
+            }
+            else {
+                mergedList.next = new LinkedListNode(l2.data);
+                l2 = l2.next;
+            }
+            mergedList = mergedList.next;
+        }
+        if(l1!=null)
+            mergedList.next = l1;
+        if(l2!=null)
+            mergedList.next = l2;
+        return bull.next;
+    }
     /* TreeNode questions*/
+
+
+    /* isbalanced brute force solution */
+    public int getHeight(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        return Math.max(getHeight(root.left), getHeight(root.right)) + 1;
+    }
+
+    public boolean isBalanced(TreeNode root){
+        if(root == null){
+            return true;
+        }
+        int diff = getHeight(root.left) - getHeight(root.right);
+        if(Math.abs(diff) >1){
+            return false;
+        }
+        else {
+            return isBalanced(root.left) && isBalanced(root.right);
+        }
+    }
+
+    /* isBalanced more optimal version */
+
+    // need to lessen calls to getHeight, so you can actually use getHeight as a means of telling if a tree is balanced
+    public int getHeightOpt(TreeNode root){
+        if( root == null){
+            return 0;
+        }
+        int leftH = getHeightOpt(root.left);
+        if(leftH == -1){
+            return -1;
+        }
+        int rightH = getHeightOpt(root.right);
+        if(rightH == -1){
+            return -1;
+        }
+        int heightdiff = rightH - leftH;
+        if(Math.abs(heightdiff) > 1){
+            return -1;
+        } else {
+            return Math.max(leftH,rightH) + 1;
+        }
+    }
+    public boolean validateBST(TreeNode root){
+        int min = Integer.MIN_VALUE;
+        int max = Integer.MAX_VALUE;
+        return validateBST(root,min,max);
+    }
+    public boolean validateBST(TreeNode root, int min, int max){
+        if(root == null){
+            return true;
+        }
+        if(root.data < min || root.data > max){
+            return false;
+        }
+        else {
+            return validateBST(root.left, min, root.data) && validateBST(root.right,root.data,max);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /* Find Lowest Common Ancestor of a BST */
